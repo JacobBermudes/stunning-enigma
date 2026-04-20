@@ -6,11 +6,23 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "index.html")
+	http.HandleFunc("/logo.webp", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "logo.webp")
 	})
 
-	log.Println("Ran http://localhost:8082/privacy")
+	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "privacy.html")
+	})
+
+	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "about.html")
+	})
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/about", http.StatusFound)
+	})
+
+	log.Println("Ran http://localhost:8082")
 
 	err := http.ListenAndServe(":8082", nil)
 	if err != nil {
