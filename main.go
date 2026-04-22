@@ -18,7 +18,15 @@ func main() {
 		http.ServeFile(w, r, "about.html")
 	})
 
+	http.HandleFunc("/terms", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "terms.html")
+	})
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.Redirect(w, r, "/about", http.StatusFound)
+			return
+		}
 		http.Redirect(w, r, "/about", http.StatusFound)
 	})
 
