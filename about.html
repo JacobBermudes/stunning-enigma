@@ -191,6 +191,41 @@
             background: rgba(42, 171, 238, 0.2);
         }
 
+        .contact-block {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 16px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            user-select: text; 
+            -webkit-user-select: text;
+        }
+
+        .contact-block .contact-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .contact-block .email-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .contact-block .email-address {
+            font-size: 1.05rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            user-select: all; 
+            -webkit-user-select: all;
+        }
+
         .contact-icon {
             width: 24px;
             height: 24px;
@@ -333,12 +368,15 @@
                 Написать в Telegram (@JacobBermudes)
             </a>
 
-            <a href="mailto:jacobbrmds@gmail.com" class="contact-btn email">
+            <div class="contact-block">
                 <svg class="contact-icon" viewBox="0 0 24 24">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
-                Написать на Email (jacobbrmds@gmail.com)
-            </a>
+                <div class="contact-text">
+                    <span class="email-label">Email для связи:</span>
+                    <span class="email-address">jacobbrmds@gmail.com</span>
+                </div>
+            </div>
 
             <button class="close-modal" data-target="supportModal">Закрыть</button>
         </div>
