@@ -11,6 +11,7 @@
             --text-muted: #a09eb0;
             --primary-gradient: linear-gradient(135deg, #4A00E0 0%, #8E2DE2 50%, #00C9FF 100%);
             --accent-color: #00C9FF;
+            --tg-color: #2AABEE;
         }
 
         body, html {
@@ -69,6 +70,7 @@
         }
 
         .dropdown-menu a, .dropdown-menu button {
+            box-sizing: border-box;
             color: var(--text-main);
             text-decoration: none;
             padding: 12px 20px;
@@ -123,20 +125,8 @@
             margin-top: 0;
             color: var(--accent-color);
             font-size: 1.5rem;
+            margin-bottom: 20px;
         }
-
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .service-item:last-child { border-bottom: none; }
-
-        .service-name { font-weight: 500; }
-        .service-price { color: var(--accent-color); font-weight: 600; }
 
         .close-modal {
             margin-top: 20px;
@@ -148,6 +138,64 @@
             cursor: pointer;
             width: 100%;
             font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .service-name { font-weight: 500; }
+        .service-price { color: var(--accent-color); font-weight: 600; }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: transform 0.2s, background 0.2s;
+            box-sizing: border-box;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .contact-btn.email {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .contact-btn.email:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-btn.tg {
+            background: rgba(42, 171, 238, 0.1);
+            border: 1px solid rgba(42, 171, 238, 0.3);
+            color: var(--tg-color);
+        }
+        .contact-btn.tg:hover {
+            background: rgba(42, 171, 238, 0.2);
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            fill: currentColor;
         }
 
         .container {
@@ -228,10 +276,15 @@
             width: 100%;
         }
 
-        footer a {
+        footer a, footer span {
             color: var(--text-muted);
             text-decoration: none;
             margin: 0 10px;
+            cursor: pointer;
+        }
+
+        footer a:hover, footer span:hover {
+            color: white;
         }
     </style>
 </head>
@@ -243,10 +296,10 @@
         <button id="openServices">Услуги</button>
         <a href="/privacy">Политика конфиденциальности</a>
         <a href="/terms">Пользовательское соглашение</a>
-        <a href="mailto:jacobbrmds@gmail.com">Служба поддержки</a>
+        <button id="openSupportMenu">Служба поддержки</button>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-overlay" id="servicesModal">
         <div class="modal-content">
             <h2>Наши услуги</h2>
             
@@ -265,7 +318,29 @@
                 <span class="service-price">Бесплатно</span>
             </div>
 
-            <button class="close-modal" id="closeModal">Закрыть</button>
+            <button class="close-modal" data-target="servicesModal">Закрыть</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal-content">
+            <h2>Служба поддержки</h2>
+            
+            <a href="https://t.me/JacobBermudes" target="_blank" class="contact-btn tg">
+                <svg class="contact-icon" viewBox="0 0 24 24">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.68c.223-.198-.054-.31-.346-.116l-6.405 4.026-2.76-.86c-.6-.188-.614-.6.125-.89l10.783-4.156c.5-.188.943.114.783.91z"/>
+                </svg>
+                Написать в Telegram (@JacobBermudes)
+            </a>
+
+            <a href="mailto:jacobbrmds@gmail.com" class="contact-btn email">
+                <svg class="contact-icon" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Написать на Email (jacobbrmds@gmail.com)
+            </a>
+
+            <button class="close-modal" data-target="supportModal">Закрыть</button>
         </div>
     </div>
 
@@ -288,8 +363,8 @@
                 <p>Передовые алгоритмы защищают твой трафик даже в публичных сетях Wi-Fi.</p>
             </div>
             <div class="feature-card">
-                <h3>Защита от блокировок</h3>
-                <p>Сервис будет работать до тех пор, пока не заблокируют сам Google Play.</p>
+                <h3>Безупречная стабильность</h3>
+                <p>Интеллектуальная система маршрутизации на основе инфраструктуры Google.</p>
             </div>
         </div>
         <div>
@@ -300,7 +375,7 @@
     <footer>
         <a href="/privacy">Политика конфиденциальности</a> | 
         <a href="/terms">Пользовательское соглашение</a> | 
-        <a href="mailto:jacobbrmds@gmail.com">Поддержка</a>
+        <span id="openSupportFooter">Поддержка</span>
         <br><br>
         &copy; 2026 SurfBoost VPN. Все права защищены.
     </footer>
@@ -308,30 +383,46 @@
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const dropdownMenu = document.getElementById('dropdownMenu');
-        const openServices = document.getElementById('openServices');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const closeModal = document.getElementById('closeModal');
+        
+        const openServicesBtn = document.getElementById('openServices');
+        const openSupportMenuBtn = document.getElementById('openSupportMenu');
+        const openSupportFooterBtn = document.getElementById('openSupportFooter');
+        
+        const servicesModal = document.getElementById('servicesModal');
+        const supportModal = document.getElementById('supportModal');
+        
+        const closeBtns = document.querySelectorAll('.close-modal');
 
         menuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             dropdownMenu.classList.toggle('show');
         });
 
-        openServices.addEventListener('click', () => {
+        function showModal(modalElement) {
             dropdownMenu.classList.remove('show');
-            modalOverlay.classList.add('show');
-        });
+            modalElement.classList.add('show');
+        }
 
-        closeModal.addEventListener('click', () => {
-            modalOverlay.classList.remove('show');
+        openServicesBtn.addEventListener('click', () => showModal(servicesModal));
+        openSupportMenuBtn.addEventListener('click', () => showModal(supportModal));
+        openSupportFooterBtn.addEventListener('click', () => showModal(supportModal));
+
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).classList.remove('show');
+            });
         });
 
         document.addEventListener('click', (e) => {
             if (!dropdownMenu.contains(e.target) && e.target !== menuToggle) {
                 dropdownMenu.classList.remove('show');
             }
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove('show');
+            if (e.target === servicesModal) {
+                servicesModal.classList.remove('show');
+            }
+            if (e.target === supportModal) {
+                supportModal.classList.remove('show');
             }
         });
     </script>
