@@ -1,0 +1,9 @@
+version: '4.20'
+
+services:
+  surfboost-web:
+    image: jacobbermudes/sb-server:0.1
+    container_name: surfboost-site
+    ports:
+      - "127.0.0.1:8082:8082"
+    restart: unless-stopped
