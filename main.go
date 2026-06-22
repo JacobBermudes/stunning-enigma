@@ -1,9 +1,15 @@
 package main
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 )
+
+type SuccessData struct {
+	Days string
+	Tier string
+}
 
 func main() {
 	http.HandleFunc("/logo.webp", func(w http.ResponseWriter, r *http.Request) {
@@ -20,6 +26,35 @@ func main() {
 
 	http.HandleFunc("/terms", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "terms.html")
+	})
+
+	http.HandleFunc("/success", func(w http.ResponseWriter, r *http.Request) {
+		days := r.URL.Query().Get("days")
+		tier := r.URL.Query().Get("tier")
+
+		if days == "" {
+			days = "30"
+		}
+		if tier == "" {
+			tier = "Basic"
+		}
+
+		data := SuccessData{
+			Days: days,
+			Tier: tier,
+		}
+
+		tmpl, err := template.ParseFiles("success.html")
+		if err != nil {
+			http.Error(w, "Ошибка сервера при загрузке страницы", http.StatusInternalServerError)
+			log.Println("Ошибка шаблона:", err)
+			return
+		}
+
+		err = tmpl.Execute(w, data)
+		if err != nil {
+			log.Println("Ошибка рендера шаблона:", err)
+		}
 	})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

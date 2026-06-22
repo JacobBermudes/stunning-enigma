@@ -20,6 +20,7 @@ COPY --from=builder /app/surfboost-server .
 COPY about.html .
 COPY privacy.html .
 COPY terms.html .
+COPY success.html .
 COPY logo.webp .
 
 EXPOSE 8082

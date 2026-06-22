@@ -1,9 +1,13 @@
-version: '4.20'
-
-services:
-  surfboost-web:
-    image: jacobbermudes/sb-server:0.1
-    container_name: surfboost-site
-    ports:
-      - "127.0.0.1:8082:8082"
-    restart: unless-stopped
+sb-web:
+    image: jacobbermudes/sb-server:latest
+    container_name: sb-web
+    restart: always
+    networks:
+      - surfboost
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sb-web.entrypoints=websecure"
+      - "traefik.http.routers.sb-web.rule=Host(`surfboost.ru`) || Host(`www.surfboost.ru`)"
+      - "traefik.http.routers.sb-web.tls=true"
+      - "traefik.http.routers.sb-web.tls.certresolver=myresolver"
+      - "traefik.http.services.sb-web.loadbalancer.server.port=8082"
