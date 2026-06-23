@@ -57,6 +57,12 @@ func main() {
 		}
 	})
 
+	http.Handle("/favicons/", http.StripPrefix("/favicons/", http.FileServer(http.Dir("favicons"))))
+
+	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "favicons/favicon.ico")
+    })
+	
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
 			http.Redirect(w, r, "/about", http.StatusFound)

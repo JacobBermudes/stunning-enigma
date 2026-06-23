@@ -22,6 +22,7 @@ COPY privacy.html .
 COPY terms.html .
 COPY success.html .
 COPY logo.webp .
+COPY favicons/ ./favicons/
 
 EXPOSE 8082
 
